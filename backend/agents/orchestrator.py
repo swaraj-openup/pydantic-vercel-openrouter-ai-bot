@@ -4,7 +4,7 @@ from system_prompts.orchestrator import ORCHESTRATOR_SYSTEM_PROMPT
 from tools.content_tools import register_content_tools
 from models.trace import AgentTrace
 
-MODEL_NAME = "anthropic/claude-sonnet-4-5"
+MODEL_NAME = "qwen/qwen3.5-35b-a3b"
 
 def build_orchestrator() -> Agent:
     model = build_openrouter_model(MODEL_NAME)

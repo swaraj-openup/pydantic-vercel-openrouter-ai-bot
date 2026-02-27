@@ -10,8 +10,9 @@ import { Conversation, ConversationContent } from './ai-elements/conversation';
 import ChatInput from './Input';
 
 export default function Chat() {
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4703';
   const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({ api: "http://localhost:8000/chat" }),
+    transport: new DefaultChatTransport({ api: `${apiUrl}/chat` }),
   });
 
   const handleSubmit = (message: { text: string; files?: FileUIPart[] }) => {

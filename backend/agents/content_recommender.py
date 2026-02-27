@@ -2,7 +2,7 @@ from pydantic_ai import Agent
 from config import build_openrouter_model
 from system_prompts.orchestrator import CONTENT_RECOMMENDER_PROMPT
 
-MODEL_NAME = "anthropic/claude-sonnet-4-5"
+MODEL_NAME = "qwen/qwen3.5-35b-a3b"
 
 def build_content_recommender() -> Agent:
     model = build_openrouter_model(MODEL_NAME)
