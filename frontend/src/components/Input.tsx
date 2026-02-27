@@ -12,16 +12,20 @@ import {
   PromptInputActionMenuTrigger,
   PromptInputActionMenuContent,
   PromptInputActionAddAttachments,
+  PromptInputMessage,
 } from "@/components/ai-elements/prompt-input";
+
+import type { FileUIPart } from "ai";
 
 import { SpeechInput } from "@/components/ai-elements/speech-input";
 import { Suggestion, Suggestions } from "@/components/ai-elements/suggestion";
 
 import { useState, useCallback } from "react";
 import { Button } from "./ui/button";
+import { Plus } from "lucide-react";
 
 interface ChatInputProps {
-  onSubmit: (message: { text: string; files?: File[] }) => void;
+  onSubmit: (message: { text: string; files?: FileUIPart[] }) => void;
   status: "submitted" | "streaming" | "ready" | "error";
 }
 
@@ -32,14 +36,15 @@ const DEFAULT_SUGGESTIONS = [
 ];
 
 export default function ChatInput({ onSubmit, status }: ChatInputProps) {
-  const [suggestions, setSuggestions] = useState(DEFAULT_SUGGESTIONS);
+  const [suggestions] = useState(DEFAULT_SUGGESTIONS);
   const [voiceText, setVoiceText] = useState("");
 
   const handleSubmit = useCallback(
-    (message: { text: string; files?: File[] }) => {
+    (message: PromptInputMessage) => {
       const text = (message.text || "").trim();
-      if (!text && !message.files?.length) return;
-      onSubmit({ text, files: message.files });
+      const files = message.files?.filter((f): f is FileUIPart => !!f);
+      if (!text && !files?.length) return;
+      onSubmit({ text, files });
     },
     [onSubmit]
   );
@@ -99,6 +104,7 @@ export default function ChatInput({ onSubmit, status }: ChatInputProps) {
 
               <PromptInputButton variant="ghost" className="ml-10">
                 <Button variant="outline" size="sm">
+                  <Plus className="mr-2 h-4 w-4" />
                   Add a tool
                 </Button>
               </PromptInputButton>

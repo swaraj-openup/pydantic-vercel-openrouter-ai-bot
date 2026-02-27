@@ -1,5 +1,6 @@
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
+import type { FileUIPart } from 'ai';
 import {
   Message,
   MessageContent,
@@ -13,7 +14,7 @@ export default function Chat() {
     transport: new DefaultChatTransport({ api: "http://localhost:8000/chat" }),
   });
 
-  const handleSubmit = (message: { text: string; files?: File[] }) => {
+  const handleSubmit = (message: { text: string; files?: FileUIPart[] }) => {
     sendMessage({ text: message.text });
   };
 
